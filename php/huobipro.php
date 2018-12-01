@@ -14,150 +14,151 @@ class huobipro extends Exchange
     {
         return array_replace_recursive(
             parent::describe(), array(
-            'id'           => 'huobipro',
-            'name'         => 'Huobi Pro',
-            'countries'    => array('CN'),
-            'rateLimit'    => 2000,
-            'userAgent'    => $this->userAgents['chrome39'],
-            'version'      => 'v1',
-            'accounts'     => null,
-            'accountsById' => null,
-            'hostname'     => 'api.huobi.pro',
-            'has'          => array(
-                'CORS'                => false,
-                'fetchTickers'        => true,
-                'fetchDepositAddress' => true,
-                'fetchOHLCV'          => true,
-                'fetchOrder'          => true,
-                'fetchOrders'         => true,
-                'fetchOpenOrders'     => true,
-                'fetchClosedOrders'   => true,
-                'fetchTradingLimits'  => true,
-                'fetchMyTrades'       => true,
-                'withdraw'            => true,
-                'fetchCurrencies'     => true,
-            ),
-            'timeframes'   => array(
-                '1m'  => '1min',
-                '5m'  => '5min',
-                '15m' => '15min',
-                '30m' => '30min',
-                '1h'  => '60min',
-                '1d'  => '1day',
-                '1w'  => '1week',
-                '1M'  => '1mon',
-                '1y'  => '1year',
-            ),
-            'urls'         => array(
-                'logo'     => 'https://user-images.githubusercontent.com/1294454/27766569-15aa7b9a-5edd-11e7-9e7f-44791f4ee49c.jpg',
-                'api'      => array(
-                    'market'  => 'https://api.huobi.pro',
-                    'public'  => 'https://api.huobi.pro',
-                    'private' => 'https://api.huobi.pro',
-                    'zendesk' => 'https://huobiglobal.zendesk.com/hc/en-us/articles',
+                'id'           => 'huobipro',
+                'name'         => 'Huobi Pro',
+                'countries'    => array('CN'),
+                'rateLimit'    => 2000,
+                'userAgent'    => $this->userAgents['chrome39'],
+                'version'      => 'v1',
+                'accounts'     => null,
+                'accountsById' => null,
+                'hostname'     => 'api.huobi.pro',
+                'has'          => array(
+                    'CORS'                => false,
+                    'fetchTickers'        => true,
+                    'fetchDepositAddress' => true,
+                    'fetchOHLCV'          => true,
+                    'fetchOrder'          => true,
+                    'fetchOrders'         => true,
+                    'fetchOpenOrders'     => true,
+                    'fetchClosedOrders'   => true,
+                    'fetchTradingLimits'  => true,
+                    'fetchMyTrades'       => true,
+                    'withdraw'            => true,
+                    'fetchCurrencies'     => true,
                 ),
-                'www'      => 'https://www.huobi.pro',
-                'referral' => 'https://www.huobi.br.com/en-us/topic/invited/?invite_code=rwrd3',
-                'doc'      => 'https://github.com/huobiapi/API_Docs/wiki/REST_api_reference',
-                'fees'     => 'https://www.huobi.pro/about/fee/',
-            ),
-            'api'          => array(
-                'zendesk' => array(
-                    'get' => array(
-                        '360000400491-Trade-Limits',
+                'timeframes'   => array(
+                    '1m'  => '1min',
+                    '5m'  => '5min',
+                    '15m' => '15min',
+                    '30m' => '30min',
+                    '1h'  => '60min',
+                    '1d'  => '1day',
+                    '1w'  => '1week',
+                    '1M'  => '1mon',
+                    '1y'  => '1year',
+                ),
+                'urls'         => array(
+                    'logo'     => 'https://user-images.githubusercontent.com/1294454/27766569-15aa7b9a-5edd-11e7-9e7f-44791f4ee49c.jpg',
+                    'api'      => array(
+                        'market'  => 'https://api.huobi.pro',
+                        'public'  => 'https://api.huobi.pro',
+                        'private' => 'https://api.huobi.pro',
+                        'zendesk' => 'https://huobiglobal.zendesk.com/hc/en-us/articles',
+                    ),
+                    'www'      => 'https://www.huobi.pro',
+                    'referral' => 'https://www.huobi.br.com/en-us/topic/invited/?invite_code=rwrd3',
+                    'doc'      => 'https://github.com/huobiapi/API_Docs/wiki/REST_api_reference',
+                    'fees'     => 'https://www.huobi.pro/about/fee/',
+                ),
+                'api'          => array(
+                    'zendesk' => array(
+                        'get' => array(
+                            '360000400491-Trade-Limits',
+                        ),
+                    ),
+                    'market'  => array(
+                        'get' => array(
+                            'history/kline', // 获取K线数据
+                            'detail/merged', // 获取聚合行情(Ticker)
+                            'depth', // 获取 Market Depth 数据
+                            'trade', // 获取 Trade Detail 数据
+                            'history/trade', // 批量获取最近的交易记录
+                            'detail', // 获取 Market Detail 24小时成交量数据
+                            'tickers',
+                        ),
+                    ),
+                    'public'  => array(
+                        'get' => array(
+                            'common/symbols', // 查询系统支持的所有交易对
+                            'common/currencys', // 查询系统支持的所有币种
+                            'common/timestamp', // 查询系统当前时间
+                            'common/exchange', // order limits
+                            'settings/currencys', // ?language=en-US
+                        ),
+                    ),
+                    'private' => array(
+                        'get'  => array(
+                            'account/accounts', // 查询当前用户的所有账户(即account-id)
+                            'account/accounts/{id}/balance', // 查询指定账户的余额
+                            'order/orders/{id}', // 查询某个订单详情
+                            'order/orders/{id}/matchresults', // 查询某个订单的成交明细
+                            'order/orders', // 查询当前委托、历史委托
+                            'order/matchresults', // 查询当前成交、历史成交
+                            'dw/withdraw-virtual/addresses', // 查询虚拟币提现地址
+                            'dw/deposit-virtual/addresses',
+                            'query/deposit-withdraw',
+                            'margin/loan-orders', // 借贷订单
+                            'margin/accounts/balance', // 借贷账户详情
+                            'points/actions',
+                            'points/orders',
+                            'subuser/aggregate-balance',
+                        ),
+                        'post' => array(
+                            'order/orders/place', // 创建并执行一个新订单 (一步下单， 推荐使用)
+                            'order/orders', // 创建一个新的订单请求 （仅创建订单，不执行下单）
+                            'order/orders/{id}/place', // 执行一个订单 （仅执行已创建的订单）
+                            'order/orders/{id}/submitcancel', // 申请撤销一个订单请求
+                            'order/orders/batchcancel', // 批量撤销订单
+                            'dw/balance/transfer', // 资产划转
+                            'dw/withdraw/api/create', // 申请提现虚拟币
+                            'dw/withdraw-virtual/create', // 申请提现虚拟币
+                            'dw/withdraw-virtual/{id}/place', // 确认申请虚拟币提现
+                            'dw/withdraw-virtual/{id}/cancel', // 申请取消提现虚拟币
+                            'dw/transfer-in/margin', // 现货账户划入至借贷账户
+                            'dw/transfer-out/margin', // 借贷账户划出至现货账户
+                            'margin/orders', // 申请借贷
+                            'margin/orders/{id}/repay', // 归还借贷
+                            'subuser/transfer',
+                        ),
                     ),
                 ),
-                'market'  => array(
-                    'get' => array(
-                        'history/kline', // 获取K线数据
-                        'detail/merged', // 获取聚合行情(Ticker)
-                        'depth', // 获取 Market Depth 数据
-                        'trade', // 获取 Trade Detail 数据
-                        'history/trade', // 批量获取最近的交易记录
-                        'detail', // 获取 Market Detail 24小时成交量数据
-                        'tickers',
+                'fees'         => array(
+                    'trading' => array(
+                        'tierBased'  => false,
+                        'percentage' => true,
+                        'maker'      => 0.002,
+                        'taker'      => 0.002,
                     ),
                 ),
-                'public'  => array(
-                    'get' => array(
-                        'common/symbols', // 查询系统支持的所有交易对
-                        'common/currencys', // 查询系统支持的所有币种
-                        'common/timestamp', // 查询系统当前时间
-                        'common/exchange', // order limits
-                        'settings/currencys', // ?language=en-US
-                    ),
+                'exceptions'   => array(
+                    'account-frozen-balance-insufficient-error' => '\\ccxt\\InsufficientFunds',
+                    // array ("status":"error","err-code":"account-frozen-balance-insufficient-error","err-msg":"trade account balance is not enough, left => `0.0027`","data":null)
+                    'invalid-amount'                            => '\\ccxt\\InvalidOrder',
+                    // eg "Paramemter `amount` is invalid."
+                    'order-limitorder-amount-min-error'         => '\\ccxt\\InvalidOrder',
+                    // limit order amount error, min => `0.001`
+                    'order-marketorder-amount-min-error'        => '\\ccxt\\InvalidOrder',
+                    // market order amount error, min => `0.01`
+                    'order-limitorder-price-min-error'          => '\\ccxt\\InvalidOrder', // limit order price error
+                    'order-limitorder-price-max-error'          => '\\ccxt\\InvalidOrder', // limit order price error
+                    'order-orderstate-error'                    => '\\ccxt\\OrderNotFound',
+                    // canceling an already canceled order
+                    'order-queryorder-invalid'                  => '\\ccxt\\OrderNotFound',
+                    // querying a non-existent order
+                    'order-update-error'                        => '\\ccxt\\ExchangeNotAvailable', // undocumented error
+                    'api-signature-check-failed'                => '\\ccxt\\AuthenticationError',
+                    'api-signature-not-valid'                   => '\\ccxt\\AuthenticationError',
+                    // array ("status":"error","err-code":"api-signature-not-valid","err-msg":"Signature not valid => Incorrect Access key [Access key错误]","data":null)
                 ),
-                'private' => array(
-                    'get'  => array(
-                        'account/accounts', // 查询当前用户的所有账户(即account-id)
-                        'account/accounts/{id}/balance', // 查询指定账户的余额
-                        'order/orders/{id}', // 查询某个订单详情
-                        'order/orders/{id}/matchresults', // 查询某个订单的成交明细
-                        'order/orders', // 查询当前委托、历史委托
-                        'order/matchresults', // 查询当前成交、历史成交
-                        'dw/withdraw-virtual/addresses', // 查询虚拟币提现地址
-                        'dw/deposit-virtual/addresses',
-                        'query/deposit-withdraw',
-                        'margin/loan-orders', // 借贷订单
-                        'margin/accounts/balance', // 借贷账户详情
-                        'points/actions',
-                        'points/orders',
-                        'subuser/aggregate-balance',
-                    ),
-                    'post' => array(
-                        'order/orders/place', // 创建并执行一个新订单 (一步下单， 推荐使用)
-                        'order/orders', // 创建一个新的订单请求 （仅创建订单，不执行下单）
-                        'order/orders/{id}/place', // 执行一个订单 （仅执行已创建的订单）
-                        'order/orders/{id}/submitcancel', // 申请撤销一个订单请求
-                        'order/orders/batchcancel', // 批量撤销订单
-                        'dw/balance/transfer', // 资产划转
-                        'dw/withdraw/api/create', // 申请提现虚拟币
-                        'dw/withdraw-virtual/create', // 申请提现虚拟币
-                        'dw/withdraw-virtual/{id}/place', // 确认申请虚拟币提现
-                        'dw/withdraw-virtual/{id}/cancel', // 申请取消提现虚拟币
-                        'dw/transfer-in/margin', // 现货账户划入至借贷账户
-                        'dw/transfer-out/margin', // 借贷账户划出至现货账户
-                        'margin/orders', // 申请借贷
-                        'margin/orders/{id}/repay', // 归还借贷
-                        'subuser/transfer',
-                    ),
+                'options'      => array(
+                    'createMarketBuyOrderRequiresPrice' => true,
+                    'fetchMarketsMethod'                => 'publicGetCommonSymbols',
+                    'fetchBalanceMethod'                => 'privateGetAccountAccountsIdBalance',
+                    'createOrderMethod'                 => 'privatePostOrderOrdersPlace',
+                    'language'                          => 'en-US',
                 ),
-            ),
-            'fees'         => array(
-                'trading' => array(
-                    'tierBased'  => false,
-                    'percentage' => true,
-                    'maker'      => 0.002,
-                    'taker'      => 0.002,
-                ),
-            ),
-            'exceptions'   => array(
-                'account-frozen-balance-insufficient-error' => '\\ccxt\\InsufficientFunds',
-                // array ("status":"error","err-code":"account-frozen-balance-insufficient-error","err-msg":"trade account balance is not enough, left => `0.0027`","data":null)
-                'invalid-amount'                            => '\\ccxt\\InvalidOrder',
-                // eg "Paramemter `amount` is invalid."
-                'order-limitorder-amount-min-error'         => '\\ccxt\\InvalidOrder',
-                // limit order amount error, min => `0.001`
-                'order-marketorder-amount-min-error'        => '\\ccxt\\InvalidOrder',
-                // market order amount error, min => `0.01`
-                'order-limitorder-price-min-error'          => '\\ccxt\\InvalidOrder', // limit order price error
-                'order-limitorder-price-max-error'          => '\\ccxt\\InvalidOrder', // limit order price error
-                'order-orderstate-error'                    => '\\ccxt\\OrderNotFound',
-                // canceling an already canceled order
-                'order-queryorder-invalid'                  => '\\ccxt\\OrderNotFound', // querying a non-existent order
-                'order-update-error'                        => '\\ccxt\\ExchangeNotAvailable', // undocumented error
-                'api-signature-check-failed'                => '\\ccxt\\AuthenticationError',
-                'api-signature-not-valid'                   => '\\ccxt\\AuthenticationError',
-                // array ("status":"error","err-code":"api-signature-not-valid","err-msg":"Signature not valid => Incorrect Access key [Access key错误]","data":null)
-            ),
-            'options'      => array(
-                'createMarketBuyOrderRequiresPrice' => true,
-                'fetchMarketsMethod'                => 'publicGetCommonSymbols',
-                'fetchBalanceMethod'                => 'privateGetAccountAccountsIdBalance',
-                'createOrderMethod'                 => 'privatePostOrderOrdersPlace',
-                'language'                          => 'en-US',
-            ),
-        )
+            )
         );
     }
 
@@ -478,7 +479,7 @@ class huobipro extends Exchange
 
         return array(
             'info'      => $trade,
-            'id'        => substr($trade['id'], 2),
+            'id'        => $trade['id'],
             'order'     => $order,
             'timestamp' => $timestamp,
             'datetime'  => $this->iso8601($timestamp),
@@ -883,9 +884,9 @@ class huobipro extends Exchange
         //
         return array_merge(
             $this->parse_order($response), array(
-            'id'     => $id,
-            'status' => 'canceled',
-        )
+                'id'     => $id,
+                'status' => 'canceled',
+            )
         );
     }
 
